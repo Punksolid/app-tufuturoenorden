@@ -2,6 +2,7 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
+import { useFinanzeStore }  from "@/stores/finanze";
 
 // Vuelidate, for more info and examples you can check out https://github.com/vuelidate/vuelidate
 import useVuelidate from "@vuelidate/core";
@@ -9,6 +10,7 @@ import { required, minLength } from "@vuelidate/validators";
 
 // Main store and Router
 const store = useTemplateStore();
+const finanzeStore = useFinanzeStore();
 const router = useRouter();
 
 // Input state variables
@@ -42,9 +44,14 @@ async function onSubmit() {
     // notify user form is invalid
     return;
   }
+  // save token from this.password to store in finanze.js with store.commit("setPassword", this.password);
+
+  console.log("Form is valid, submitting...");
+
+  finanzeStore.setPassword(state.password);
 
   // Go to dashboard
-  router.push({ name: "backend-pages-auth" });
+  router.push({ name: "accounts" });
 }
 </script>
 
